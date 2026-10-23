@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan *)",
+      "Bash(composer test *)",
+      "Bash(composer install *)",
+      "Bash(composer outdated *)",
+      "Bash(composer show *)",
+      "Bash(vendor/bin/pest *)",
+      "Bash(pint *)",
+      "Bash(vendor/bin/pint *)"
+    ],
+    "deny": [
+      "Bash(php artisan migrate:fresh *)",
+      "Bash(php artisan migrate:reset *)",
+      "Bash(php artisan db:wipe *)",
+      "Edit(.env)",
+      "Edit(.agents/**)",
+      "Edit(.amp/**)"
+    ]
+  }
+}
