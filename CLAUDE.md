@@ -41,6 +41,9 @@ php artisan filament:assets --ansi
 - Tests Pest au style de `tests/Feature/SmokeTest.php` : `it('...', function () { ... })`, `$this->get()`, `User::forceCreate([... 'is_admin' => true])` pour un admin.
 - Typage strict des retours (`: void`, etc.), docblocks courts comme dans le code existant.
 
+## SSO (OpenID Connect)
+Voir `docs/sso.md`. Code : `app/Auth/` (résolution des comptes, garde IP du login mot de passe), `app/Http/Controllers/Auth/SsoController.php`, `app/Filament/Pages/Auth/Login.php` (remplace la page de login du panel `cachet`, branchée dans `AppServiceProvider::registerLoginPage()`, qui l'enregistre aussi auprès de Livewire). Config : `config/sso.php` + `services.openidconnect` (package `socialiteproviders/openidconnect`).
+
 ## Environnement local
 - `.agents/` et `.amp/` appartiennent à Amp (setup d'orbe, services) : ne pas les modifier ni exécuter `.agents/setup` (utilise sudo/apt).
 - Si `php` / `composer` sont absents du PATH ou `vendor/` manquant, le signaler plutôt que d'affirmer que du code a été testé.

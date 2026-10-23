@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use App\Http\Controllers\Auth\SsoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,11 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+
+Route::middleware('throttle:20,1')
+    ->prefix('auth/oidc')
+    ->name('sso.')
+    ->group(function () {
+        Route::get('redirect', [SsoController::class, 'redirect'])->name('redirect');
+        Route::get('callback', [SsoController::class, 'callback'])->name('callback');
+    });

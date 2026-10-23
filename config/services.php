@@ -44,4 +44,21 @@ return [
         ],
     ],
 
+    'openidconnect' => [
+        // Optional shorthand: entra, keycloak, okta, auth0 or google. Leave empty for any other IdP.
+        // Empty values must be null so a provider's derived defaults apply.
+        'provider' => env('OIDC_PROVIDER') ?: null,
+        'base_url' => env('OIDC_BASE_URL') ?: null,
+        'tenant' => env('OIDC_TENANT') ?: null,
+        'server_url' => env('OIDC_SERVER_URL') ?: null,
+        'realm' => env('OIDC_REALM') ?: null,
+        'domain' => env('OIDC_DOMAIN') ?: null,
+        'client_id' => env('OIDC_CLIENT_ID'),
+        'client_secret' => env('OIDC_CLIENT_SECRET'),
+        // Defaults to the absolute URL of the "sso.callback" route when empty.
+        'redirect' => env('OIDC_REDIRECT_URI') ?: null,
+        'scopes' => env('OIDC_SCOPES') ?: null,
+        'require_email' => true,
+    ],
+
 ];

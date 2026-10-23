@@ -11,10 +11,14 @@
 
 namespace App\Providers;
 
+use App\Filament\Pages\Auth\Login;
+use Filament\PanelRegistry;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Finder\Finder;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +36,31 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->registerLoginPage();
+    }
+
+    /**
+     * Replace the dashboard login page with the SSO-aware one.
+     *
+     * The Cachet panel is registered by the (auto-discovered) Cachet providers before
+     * this one, and Filament registers its Livewire components as soon as the panel is,
+     * so the page must also be registered with Livewire here.
+     */
+    protected function registerLoginPage(): void
+    {
+        $this->app->resolving(PanelRegistry::class, function (PanelRegistry $registry): void {
+            $panel = $registry->get('cachet', isStrict: false);
+
+            if ($panel === null || ! $panel->hasLogin()) {
+                return;
+            }
+
+            $panel->login(Login::class);
+
+            [, $name] = app(Finder::class)->parseNamespaceAndName(Login::class);
+
+            Livewire::component($name, Login::class);
+        });
     }
 
     /**

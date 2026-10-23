@@ -54,6 +54,7 @@ class User extends CachetUser implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'bool',
         ];
     }
 
